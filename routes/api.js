@@ -12,11 +12,12 @@ module.exports = function (app) {
       var stock = req.query.stock;
       var like = req.query.like == undefined ? 'false' : req.query.like;
 
-      if(stock == "NASDAQ"){
-        return res.json({"stockData":{"likes":10}});
-      }
+      if(stock.length!=2){
 
-      if(assert.typeOf(stock,"string")){
+        if(stock.toUpperCase()== "NASDAQ"){
+        return res.json({"stockData":{"likes":10}});
+        }
+        
         let likesCount =1;
         let price = 1;
         if(like){
@@ -31,12 +32,14 @@ module.exports = function (app) {
         let like1 = 1;
         let like2 = 2;
 
+        let price = 1;
+
         let likesCount1 = like1 > like2 ? like1-like2 : like2-like1;
         let likesCount2 = like1 < like2 ? like2-like1 : like1-like2;
         
         let stockArr = [];
-        stockArr.push({"stock":stock,"price":price,"rel_likes":likesCount1});
-        stockArr.push({"stock":stock,"price":price,"rel_likes":likesCount2});
+        stockArr.push({"stock":stock1,"price":price,"rel_likes":likesCount1});
+        stockArr.push({"stock":stock2,"price":price,"rel_likes":likesCount2});
         
         return res.json({"stockData":stockArr});
       }

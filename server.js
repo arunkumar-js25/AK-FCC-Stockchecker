@@ -10,14 +10,6 @@ const runner            = require('./test-runner');
 const helmet        = require('helmet');
 const app = express();
 
-//Set a Content Security Policy
-app.use(helmet.contentSecurityPolicy(
-  { directives:
-    { defaultSrc: ["'self'"], 
-     scriptSrc: ["'self'"]
-    }}
-));
-
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
@@ -30,6 +22,15 @@ app.route('/')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
   });
+
+//Set a Content Security Policy
+app.use(helmet.contentSecurityPolicy(
+  { directives:
+    { defaultSrc: ["'self'"], 
+     scriptSrc: ["'self'"],
+     styleSrc: ["'self'"]
+    }}
+));
 
 //For FCC testing purposes
 fccTestingRoutes(app);
